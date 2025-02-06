@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "プロファイル 1": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\GEnum.Test\\GEnum.Test.csproj"
+    }
+  }
+}

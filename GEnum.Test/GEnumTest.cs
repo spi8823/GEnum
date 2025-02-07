@@ -1,4 +1,5 @@
 using NuGet.Frameworks;
+using System.Text;
 
 namespace GEnum.Test
 {
@@ -57,6 +58,16 @@ namespace GEnum.Test
             Assert.IsTrue(flag.IsA());
             Assert.IsFalse(flag.IsB());
             Assert.IsFalse(flag.IsC());
+        }
+        #endregion
+
+        #region Displaying
+        [TestMethod]
+        public void TestGetDisplayName()
+        {
+            Assert.AreEqual(TestFlag.None.GetDisplayName(), "None");
+            Assert.AreEqual(TestFlag.A.GetDisplayName(), "DisplayA");
+            Assert.AreEqual((TestFlag.A | TestFlag.B).GetDisplayName(), "DisplayA | DisplayB");
         }
         #endregion
     }

@@ -13,6 +13,9 @@ namespace GEnum
 
             var matchingExtensionsSource = context.SyntaxProvider.ForAttributeWithMetadataName($"GEnum.{nameof(MatchingExtensionsAttribute)}", (_, _) => true, (context, _) => context);
             context.RegisterSourceOutput(matchingExtensionsSource, EmitMatchingExtensions);
+
+            var displayingExtensionsSource = context.SyntaxProvider.ForAttributeWithMetadataName($"GEnum.{nameof(DisplayingExtensionsAttribute)}", (_, _) => true, (context, _) => context);
+            context.RegisterSourceOutput(displayingExtensionsSource, EmitDisplayingExtensions);
         }
 
         private static string GetNameSpaceExpression(INamedTypeSymbol typeSymbol) =>

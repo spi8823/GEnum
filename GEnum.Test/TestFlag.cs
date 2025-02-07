@@ -8,11 +8,12 @@ namespace GEnum.Test
 {
     [MatchingExtensions]
     [FlagsExtensions]
+    [DisplayingExtensions]
     public enum TestFlag
     {
-        None = 0,
-        A = 1 << 0,
-        B = 1 << 1,
+        None,
+        [DisplayName("DisplayA")] A = 1 << 0,
+        [DisplayName("DisplayB")] B = 1 << 1,
         C = 1 << 2,
     }
 }

@@ -19,6 +19,6 @@ namespace GEnum
         }
 
         private static string GetNameSpaceExpression(INamedTypeSymbol typeSymbol) =>
-            typeSymbol.ContainingNamespace.IsGlobalNamespace ? string.Empty : $"using {typeSymbol.ContainingNamespace};";
+            typeSymbol.ContainingNamespace.IsGlobalNamespace ? string.Empty : $"namespace {typeSymbol.ContainingNamespace};";
     }
 }

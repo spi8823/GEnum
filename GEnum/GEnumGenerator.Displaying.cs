@@ -64,7 +64,9 @@ namespace GEnum
             }
 
             var code = $$"""
+                using System.Collections.Generic;
                 using System.Text;
+
                 {{GetNameSpaceExpression(typeSymbol)}}
 
                 public static partial class {{typeName}}Extensions

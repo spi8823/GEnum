@@ -25,15 +25,6 @@ namespace GEnum.Benchmark
             {
                 var f = AB;
                 result &= (f & A) == A;
-                result &= (f & A) == A;
-                result &= (f & A) == A;
-                result &= (f & A) == A;
-                result &= (f & A) == A;
-                result &= (f & A) == A;
-                result &= (f & A) == A;
-                result &= (f & A) == A;
-                result &= (f & A) == A;
-                result &= (f & A) == A;
             }
             return result;
         }
@@ -45,15 +36,6 @@ namespace GEnum.Benchmark
             for (var i = 0; i < loopCount; i++)
             {
                 var f = AB;
-                result &= f.HasFlag(A);
-                result &= f.HasFlag(A);
-                result &= f.HasFlag(A);
-                result &= f.HasFlag(A);
-                result &= f.HasFlag(A);
-                result &= f.HasFlag(A);
-                result &= f.HasFlag(A);
-                result &= f.HasFlag(A);
-                result &= f.HasFlag(A);
                 result &= f.HasFlag(A);
             }
             return result;
@@ -67,15 +49,6 @@ namespace GEnum.Benchmark
             {
                 var f = AB;
                 result &= f.Contains(A);
-                result &= f.Contains(A);
-                result &= f.Contains(A);
-                result &= f.Contains(A);
-                result &= f.Contains(A);
-                result &= f.Contains(A);
-                result &= f.Contains(A);
-                result &= f.Contains(A);
-                result &= f.Contains(A);
-                result &= f.Contains(A);
             }
             return result;
         }
@@ -86,16 +59,8 @@ namespace GEnum.Benchmark
             var result = A;
             for (var i = 0; i < loopCount; i++)
             {
-                result |= B;
-                result |= B;
-                result |= B;
-                result |= B;
-                result |= B;
-                result |= B;
-                result |= B;
-                result |= B;
-                result |= B;
-                result |= B;
+                var f = B;
+                result |= f;
             }
 
             return result;
@@ -107,16 +72,8 @@ namespace GEnum.Benchmark
             var result = A;
             for (var i = 0; i < loopCount; i++)
             {
-                result.Add(B);
-                result.Add(B);
-                result.Add(B);
-                result.Add(B);
-                result.Add(B);
-                result.Add(B);
-                result.Add(B);
-                result.Add(B);
-                result.Add(B);
-                result.Add(B);
+                var f = B;
+                result.Add(f);
             }
 
             return result;
@@ -128,16 +85,8 @@ namespace GEnum.Benchmark
             var result = AB;
             for (var i = 0; i < loopCount; i++)
             {
-                result.Remove(B);
-                result.Remove(B);
-                result.Remove(B);
-                result.Remove(B);
-                result.Remove(B);
-                result.Remove(B);
-                result.Remove(B);
-                result.Remove(B);
-                result.Remove(B);
-                result.Remove(B);
+                var f = B;
+                result.Remove(f);
             }
 
             return result;
@@ -149,16 +98,8 @@ namespace GEnum.Benchmark
             var result = AB;
             for (var i = 0; i < loopCount; i++)
             {
-                result.Clear();
-                result.Clear();
-                result.Clear();
-                result.Clear();
-                result.Clear();
-                result.Clear();
-                result.Clear();
-                result.Clear();
-                result.Clear();
-                result.Clear();
+                var f = AB;
+                f.Clear();
             }
 
             return result;

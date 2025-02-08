@@ -63,6 +63,14 @@ namespace GEnum.Test
 
         #region Displaying
         [TestMethod]
+        public void TestGetDefineName()
+        {
+            Assert.AreEqual(TestFlag.None.GetDefineName(), "None");
+            Assert.AreEqual(TestFlag.A.GetDefineName(), "A");
+            Assert.AreEqual(TestFlag.B.GetDefineName(), "B");
+            Assert.AreEqual((TestFlag.A | TestFlag.B).GetDefineName(), "Undefined");
+        }
+
         public void TestGetDisplayName()
         {
             Assert.AreEqual(TestFlag.None.GetDisplayName(), "None");

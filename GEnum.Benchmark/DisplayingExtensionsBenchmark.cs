@@ -17,6 +17,14 @@ namespace GEnum.Benchmark
         }
 
         [Benchmark]
+        public string GEnum_GetDefineName()
+        {
+            for (var i = 0; i < loopCount; i++)
+                A.GetDefineName();
+            return A.GetDefineName();
+        }
+
+        [Benchmark]
         public string GEnum_GetDisplayName()
         {
             for (var i = 0; i < loopCount; i++)

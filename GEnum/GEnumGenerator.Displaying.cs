@@ -30,14 +30,14 @@ namespace GEnum
             var typeName = typeSymbol.Name;
 
             // 定義名と表示名の組を取得
-            var list = new List<(string declaration, string display)>();
-            var noneDeclarations = new List<string>();
-            var isFirstDeclaration = true;
+            var list = new List<(string define, string display)>();
+            var noneDefinitions = new List<string>();
+            var isFirstDefinition = true;
             foreach (var node in from node in source.TargetNode.ChildNodes()
                                  where node is EnumMemberDeclarationSyntax
                                  select node as EnumMemberDeclarationSyntax)
             {
-                var declaration = node.ChildTokens().First().ValueText;
+                var define = node.ChildTokens().First().ValueText;
 
                 var display = (from attributeList in node.AttributeLists
                                from attribute in attributeList.Attributes
@@ -46,21 +46,21 @@ namespace GEnum
 
                 if (string.IsNullOrWhiteSpace(display))
                 {
-                    display = declaration;
+                    display = define;
                 }
-                list.Add((declaration, display));
+                list.Add((define, display));
 
                 // 0の時だけ特別扱いする必要があるのでどうにかして判定する
                 var isNone = node.ChildNodes().FirstOrDefault(n => n.IsKind(SyntaxKind.EqualsValueClause))?.ChildNodes().FirstOrDefault(n => n.IsKind(SyntaxKind.NumericLiteralExpression) && n.ToString() == "0") != null;
                 if (isNone)
                 {
-                    noneDeclarations.Add(declaration);
+                    noneDefinitions.Add(define);
                 }
-                else if (isFirstDeclaration && !node.ChildNodes().Any(n => n.IsKind(SyntaxKind.EqualsValueClause)))
+                else if (isFirstDefinition && !node.ChildNodes().Any(n => n.IsKind(SyntaxKind.EqualsValueClause)))
                 {
-                    noneDeclarations.Add(declaration);
+                    noneDefinitions.Add(define);
                 }
-                isFirstDeclaration = false;
+                isFirstDefinition = false;
             }
 
             var code = $$"""
@@ -72,15 +72,25 @@ namespace GEnum
                     public static IReadOnlyDictionary<{{typeName}}, string> DisplayNames { get; } = new Dictionary<{{typeName}}, string>()
                     {
                 {{string.Join("\n", list.Select(item => 
-                $"        {{ {typeName}.{item.declaration}, \"{item.display}\" }},"))}}
+                $"        {{ {typeName}.{item.define}, \"{item.display}\" }},"))}}
                     };
+
+                    public static string GetDefineName(this {{typeName}} source)
+                    {
+                        return source switch
+                        {
+                {{string.Join("\n", list.Select(item =>
+                $"            {typeName}.{item.define} => \"{item.define}\","))}}
+                            _ => "Undefined",
+                        };
+                    }
 
                     public static string GetDisplayName(this {{typeName}} source)
                     {
                         return source switch
                         {
                 {{string.Join("\n", list.Select(item => 
-                $"            {typeName}.{item.declaration} => \"{item.display}\","))}}
+                $"            {typeName}.{item.define} => \"{item.display}\","))}}
                             _ => BuildDisplayName(source),
                         };
                     }
@@ -95,8 +105,8 @@ namespace GEnum
                         }
                         var isFirst = true;
                         var builder = new StringBuilder();
-                {{string.Join("\n", list.Where(item => !noneDeclarations.Contains(item.declaration)).Select(item => $$"""
-                        if(source.Contains({{typeName}}.{{item.declaration}}))
+                {{string.Join("\n", list.Where(item => !noneDefinitions.Contains(item.define)).Select(item => $$"""
+                        if(source.Contains({{typeName}}.{{item.define}}))
                         {
                             if(!isFirst) builder.Append(" | ");
                             builder.Append("{{item.display}}");
